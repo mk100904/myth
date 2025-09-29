@@ -385,8 +385,21 @@ const HomeScreen = ({ navigation }) => {
   const handleMerge = async (code) => {
     setIsMerging(true);
     
-    // Mock merge with another player - always use WATER for demo
-    const otherCard = { emoji: '💧', name: 'WATER', description: 'Element of flow', color: '#00d4ff' };
+    // Base elemental cards
+    const baseCards = [
+      { name: 'FIRE', emoji: '🔥', color: '#FF4500', description: 'Element of passion and energy' },
+      { name: 'WATER', emoji: '💧', color: '#00BFFF', description: 'Element of fluidity and adaptability' },
+      { name: 'ICE', emoji: '❄️', color: '#87CEEB', description: 'Element of stillness and preservation' },
+      { name: 'AIR', emoji: '💨', color: '#F0F8FF', description: 'Element of freedom and movement' },
+      { name: 'SOIL', emoji: '🌍', color: '#8B4513', description: 'Element of stability and growth' },
+      { name: 'MAGIC', emoji: '✨', color: '#9370DB', description: 'Element of mystery and power' },
+      { name: 'ETHER', emoji: '⭐', color: '#4B0082', description: 'Element of the cosmos and infinity' },
+      { name: 'LIGHTNING', emoji: '⚡', color: '#FFD700', description: 'Element of speed and electricity' }
+    ];
+    
+    // Mock merge with another player - randomly select from base cards
+    const randomIndex = Math.floor(Math.random() * baseCards.length);
+    const otherCard = baseCards[randomIndex];
     const currentCard = dailyCard;
     
     // Merge results - comprehensive combinations
@@ -895,99 +908,8 @@ const HomeScreen = ({ navigation }) => {
                              },
                            ]}>
                              <LinearGradient
-                               colors={['#2D1B69', '#4A2C7A', '#6B46C1']}
-                               style={styles.mysteryCardGradient}
-                             >
-                               {/* Corner Accents */}
-                               <View style={styles.cornerAccent} />
-                               <View style={[styles.cornerAccent, styles.cornerAccentTopRight]} />
-                               <View style={[styles.cornerAccent, styles.cornerAccentBottomLeft]} />
-                               <View style={[styles.cornerAccent, styles.cornerAccentBottomRight]} />
-                               
-                               {/* Central Gear Symbol */}
-                               <View style={styles.gearSymbol} />
-                               
-                               {/* Golden Star Sparkles */}
-                               <View style={styles.starSparkles}>
-                                 <View style={[styles.starSparkle, styles.starSparkleLarge]} />
-                                 <View style={[styles.starSparkle, styles.starSparkleMedium]} />
-                                 <View style={[styles.starSparkle, styles.starSparkleSmall]} />
-                               </View>
-                               
-                               <View style={styles.mysteryCardInner}>
-                                 <Text style={styles.mysteryCardName}>{dailyCard?.name}</Text>
-                               </View>
-                             </LinearGradient>
-                           </Animated.View>
-
-                           {/* Other Player's Card */}
-                           <Animated.View style={[
-                             styles.simpleCard,
-                             {
-                               transform: [
-                                 {
-                                   translateX: rightCardAnimation.interpolate({
-                                     inputRange: [0, 1, 2],
-                                     outputRange: [100, 0, 0],
-                                   }),
-                                 },
-                                 {
-                                   scale: rightCardAnimation.interpolate({
-                                     inputRange: [0, 1, 2],
-                                     outputRange: [0.8, 1, 0.8],
-                                   }),
-                                 },
-                               ],
-                               opacity: rightCardAnimation.interpolate({
-                                 inputRange: [0, 1, 2],
-                                 outputRange: [0, 1, 0.3],
-                               }),
-                             },
-                           ]}>
-                             <LinearGradient
-                               colors={['#2D1B69', '#4A2C7A', '#6B46C1']}
-                               style={styles.mysteryCardGradient}
-                             >
-                               {/* Corner Accents */}
-                               <View style={styles.cornerAccent} />
-                               <View style={[styles.cornerAccent, styles.cornerAccentTopRight]} />
-                               <View style={[styles.cornerAccent, styles.cornerAccentBottomLeft]} />
-                               <View style={[styles.cornerAccent, styles.cornerAccentBottomRight]} />
-                               
-                               {/* Central Gear Symbol */}
-                               <View style={styles.gearSymbol} />
-                               
-                               {/* Golden Star Sparkles */}
-                               <View style={styles.starSparkles}>
-                                 <View style={[styles.starSparkle, styles.starSparkleLarge]} />
-                                 <View style={[styles.starSparkle, styles.starSparkleMedium]} />
-                                 <View style={[styles.starSparkle, styles.starSparkleSmall]} />
-                               </View>
-                               
-                               <View style={styles.mysteryCardInner}>
-                                 <Text style={styles.mysteryCardName}>{otherPlayerCard?.name}</Text>
-                               </View>
-                             </LinearGradient>
-                           </Animated.View>
-
-                           {/* Merged Result Card */}
-                           <Animated.View style={[
-                             styles.mergedCard,
-                             {
-                               transform: [
-                                 {
-                                   scale: centerCardAnimation.interpolate({
-                                     inputRange: [0, 1],
-                                     outputRange: [0, 1],
-                                   }),
-                                 },
-                               ],
-                               opacity: centerCardAnimation,
-                             },
-                           ]}>
-                             <LinearGradient
-                               colors={[mergedCard?.color + '80', mergedCard?.color + '40', mergedCard?.color + '20']}
-                               style={styles.elementalCardGradient}
+                               colors={[dailyCard?.color + '80', dailyCard?.color + '40', dailyCard?.color + '20']}
+                               style={styles.homePageCardGradient}
                              >
                                {/* Indian Mythological Art Pattern */}
                                <View style={styles.mythologicalPattern}>
@@ -1019,9 +941,133 @@ const HomeScreen = ({ navigation }) => {
                                  </View>
                                </View>
                                
-                               <View style={styles.elementalCardInner}>
-                                 <Text style={styles.elementalCardEmoji}>{mergedCard?.emoji}</Text>
-                                 <Text style={[styles.elementalCardName, { color: mergedCard?.color }]}>{mergedCard?.name}</Text>
+                               <View style={styles.homePageCardInner}>
+                                 <Text style={styles.homePageCardEmoji}>{dailyCard?.emoji}</Text>
+                                 <Text style={[styles.homePageCardName, { color: dailyCard?.color }]}>{dailyCard?.name}</Text>
+                               </View>
+                             </LinearGradient>
+                           </Animated.View>
+
+                           {/* Other Player's Card */}
+                           <Animated.View style={[
+                             styles.simpleCard,
+                             {
+                               transform: [
+                                 {
+                                   translateX: rightCardAnimation.interpolate({
+                                     inputRange: [0, 1, 2],
+                                     outputRange: [100, 0, 0],
+                                   }),
+                                 },
+                                 {
+                                   scale: rightCardAnimation.interpolate({
+                                     inputRange: [0, 1, 2],
+                                     outputRange: [0.8, 1, 0.8],
+                                   }),
+                                 },
+                               ],
+                               opacity: rightCardAnimation.interpolate({
+                                 inputRange: [0, 1, 2],
+                                 outputRange: [0, 1, 0.3],
+                               }),
+                             },
+                           ]}>
+                             <LinearGradient
+                               colors={[otherPlayerCard?.color + '80', otherPlayerCard?.color + '40', otherPlayerCard?.color + '20']}
+                               style={styles.homePageCardGradient}
+                             >
+                               {/* Indian Mythological Art Pattern */}
+                               <View style={styles.mythologicalPattern}>
+                                 <View style={styles.patternCorner} />
+                                 <View style={[styles.patternCorner, styles.patternCornerTopRight]} />
+                                 <View style={[styles.patternCorner, styles.patternCornerBottomLeft]} />
+                                 <View style={[styles.patternCorner, styles.patternCornerBottomRight]} />
+                                 
+                                 {/* Central Mandala */}
+                                 <View style={styles.mandalaContainer}>
+                                   <View style={styles.mandalaOuter} />
+                                   <View style={styles.mandalaInner} />
+                                   <View style={styles.mandalaCore} />
+                                 </View>
+                                 
+                                 {/* Lotus Petals */}
+                                 <View style={styles.lotusContainer}>
+                                   {Array.from({ length: 8 }).map((_, index) => (
+                                     <View
+                                       key={index}
+                                       style={[
+                                         styles.lotusPetal,
+                                         {
+                                           transform: [{ rotate: `${index * 45}deg` }],
+                                         },
+                                       ]}
+                                     />
+                                   ))}
+                                 </View>
+                               </View>
+                               
+                               <View style={styles.homePageCardInner}>
+                                 <Text style={styles.homePageCardEmoji}>{otherPlayerCard?.emoji}</Text>
+                                 <Text style={[styles.homePageCardName, { color: otherPlayerCard?.color }]}>{otherPlayerCard?.name}</Text>
+                               </View>
+                             </LinearGradient>
+                           </Animated.View>
+
+                           {/* Merged Result Card */}
+                           <Animated.View style={[
+                             styles.mergedCard,
+                             {
+                               transform: [
+                                 {
+                                   scale: centerCardAnimation.interpolate({
+                                     inputRange: [0, 1],
+                                     outputRange: [0, 1],
+                                   }),
+                                 },
+                               ],
+                               opacity: centerCardAnimation.interpolate({
+                                 inputRange: [0, 1],
+                                 outputRange: [0, 1],
+                               }),
+                             },
+                           ]}>
+                             <LinearGradient
+                               colors={[mergedCard?.color + '80', mergedCard?.color + '40', mergedCard?.color + '20']}
+                               style={styles.homePageCardGradient}
+                             >
+                               {/* Indian Mythological Art Pattern */}
+                               <View style={styles.mythologicalPattern}>
+                                 <View style={styles.patternCorner} />
+                                 <View style={[styles.patternCorner, styles.patternCornerTopRight]} />
+                                 <View style={[styles.patternCorner, styles.patternCornerBottomLeft]} />
+                                 <View style={[styles.patternCorner, styles.patternCornerBottomRight]} />
+                                 
+                                 {/* Central Mandala */}
+                                 <View style={styles.mandalaContainer}>
+                                   <View style={styles.mandalaOuter} />
+                                   <View style={styles.mandalaInner} />
+                                   <View style={styles.mandalaCore} />
+                                 </View>
+                                 
+                                 {/* Lotus Petals */}
+                                 <View style={styles.lotusContainer}>
+                                   {Array.from({ length: 8 }).map((_, index) => (
+                                     <View
+                                       key={index}
+                                       style={[
+                                         styles.lotusPetal,
+                                         {
+                                           transform: [{ rotate: `${index * 45}deg` }],
+                                         },
+                                       ]}
+                                     />
+                                   ))}
+                                 </View>
+                               </View>
+                               
+                               <View style={styles.homePageCardInner}>
+                                 <Text style={styles.homePageCardEmoji}>{mergedCard?.emoji}</Text>
+                                 <Text style={[styles.homePageCardName, { color: mergedCard?.color }]}>{mergedCard?.name}</Text>
                                </View>
                              </LinearGradient>
                            </Animated.View>
@@ -1954,7 +2000,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
@@ -1969,9 +2015,47 @@ const styles = StyleSheet.create({
 
   mergedCard: {
     position: 'absolute',
-    width: 120,
-    height: 150,
+    width: 160,
+    height: 200,
     zIndex: 5,
+  },
+
+  homePageCardGradient: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 18,
+    borderWidth: 0,
+    position: 'relative',
+    shadowColor: '#ffffff',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.4,
+    shadowRadius: 15,
+    elevation: 15,
+  },
+
+  homePageCardInner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2,
+  },
+
+  homePageCardEmoji: {
+    fontSize: 32,
+    marginBottom: 8,
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+
+  homePageCardName: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    fontFamily: 'Courier New',
+    textAlign: 'center',
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 
   elementalCardGradient: {
@@ -1979,8 +2063,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 18,
-    borderWidth: 2,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderWidth: 0,
     position: 'relative',
     shadowColor: '#ffffff',
     shadowOffset: { width: 0, height: 0 },
@@ -2261,6 +2344,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 2,
     paddingTop: 20,
+  },
+
+  mysteryCardEmoji: {
+    fontSize: 32,
+    marginBottom: 8,
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
 
   mysteryCardName: {
